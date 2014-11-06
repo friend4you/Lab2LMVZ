@@ -21,7 +21,7 @@ namespace DrawingVector
         float xObjAlpha;
         float yObjAlpha;
         float zObjAlpha;
-        Graphics graph;        
+        Graphics graph;
         Matrix cameraMatrix, objectMatrix;
 
         public Form1()
@@ -91,7 +91,7 @@ namespace DrawingVector
             Bitmap bm = new Bitmap(DrawPanel.Width, DrawPanel.Height);
             Graphics gr = Graphics.FromImage(bm);
 
-                
+
 
             gr.Clear(Color.White);
 
@@ -111,7 +111,7 @@ namespace DrawingVector
                 {
                     if (intersaction[i, j])
                     {
-                        gr.DrawLine(Pens.WhiteSmoke, points[i], points[j]);
+                        gr.DrawLine(Pens.Black, points[i], points[j]);
                     }
                 }
             }
@@ -251,6 +251,27 @@ namespace DrawingVector
             UpdateCameraMatrix();
             UpdateObjectMatrix();
             ReDraw();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.Show();
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form3 form3 = new Form3();
+            form3.Show();
+            
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form4 form4 = new Form4();
+            form4.Show();
+          
         }
 
     }

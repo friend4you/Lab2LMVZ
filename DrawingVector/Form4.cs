@@ -42,13 +42,7 @@ namespace DrawingVector
             UpdateCameraMatrix();
             UpdateObjectMatrix();
 
-            numericUpDown1.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown2.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown3.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown4.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown5.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown6.Maximum = Convert.ToInt32(textBox1.Text);
-
+            
             Timer timer = new Timer();
             timer.Interval = 100;
             timer.Tick += timer_Tick;
@@ -67,14 +61,14 @@ namespace DrawingVector
             PointF yrow = GetCameraPoint(new SparseVector(new float[] { 0, bgsize, 0 }));
             PointF zrow = GetCameraPoint(new SparseVector(new float[] { 0, 0, bgsize }));
             PointF zero = GetCameraPoint(new SparseVector(new float[] { 0, 0, 0 }));
-            PointF proectionX1 = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown1.Value, (float)numericUpDown2.Value, 0 }));
-            PointF proectionY1 = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown1.Value, 0, (float)numericUpDown3.Value }));
-            PointF proectionZ1 = GetCameraPoint(new SparseVector(new float[] { 0, (float)numericUpDown2.Value, (float)numericUpDown3.Value }));
-            PointF proectionX2 = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown4.Value, (float)numericUpDown5.Value, 0 }));
-            PointF proectionY2 = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown4.Value, 0, (float)numericUpDown6.Value }));
-            PointF proectionZ2 = GetCameraPoint(new SparseVector(new float[] { 0, (float)numericUpDown6.Value, (float)numericUpDown6.Value }));
-            PointF proectionX = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown1.Value, (float)numericUpDown2.Value, (float)numericUpDown3.Value }));
-            PointF proectionY = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown4.Value, (float)numericUpDown5.Value, (float)numericUpDown6.Value }));
+            PointF proectionX1 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(textBox2.Text), (float)Convert.ToInt32(textBox3.Text), 0 }));
+            PointF proectionY1 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(textBox2.Text), 0, (float)Convert.ToInt32(textBox4.Text) }));
+            PointF proectionZ1 = GetCameraPoint(new SparseVector(new float[] { 0, (float)Convert.ToInt32(textBox3.Text), (float)Convert.ToInt32(textBox4.Text) }));
+            PointF proectionX2 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(textBox5.Text), (float)Convert.ToInt32(textBox5.Text), 0 }));
+            PointF proectionY2 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(textBox5.Text), 0, (float)Convert.ToInt32(textBox7.Text) }));
+            PointF proectionZ2 = GetCameraPoint(new SparseVector(new float[] { 0, (float)Convert.ToInt32(textBox6.Text), (float)Convert.ToInt32(textBox7.Text) }));
+            PointF proectionX = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(textBox2.Text), (float)Convert.ToInt32(textBox3.Text), (float)Convert.ToInt32(textBox4.Text) }));
+            PointF proectionY = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(textBox5.Text), (float)Convert.ToInt32(textBox6.Text), (float)Convert.ToInt32(textBox7.Text) }));
 
             PointF point0 = GetCameraPoint(new SparseVector(new float[] { 0, 0, 0 }));
             PointF point1 = GetCameraPoint(new SparseVector(new float[] { bgsize, 0, 0 }));
@@ -111,7 +105,7 @@ namespace DrawingVector
                 {
                     if (intersaction[i, j])
                     {
-                        gr.DrawLine(Pens.WhiteSmoke, points[i], points[j]);
+                        gr.DrawLine(Pens.Black, points[i], points[j]);
                     }
                 }
             }
@@ -139,7 +133,7 @@ namespace DrawingVector
             tmpMatrix = Matrix.RotZMatrix(zCamAlpha);
             tmpMatrix *= Matrix.RotXMatrix(xCamAlpha);
             //Матрица масштабирования.
-            tmpMatrix *= Matrix.ScaleMatrix((float)trackSizeBar.Value);
+            tmpMatrix *= Matrix.ScaleMatrix((float)numericUpDown1.Value);
             //Матрица проецирования.
             tmpMatrix *= Matrix.ProjectionMatrix();
             //Сдвигаем в центр
@@ -162,7 +156,7 @@ namespace DrawingVector
             // Матрицы камеры
             tmpMatrix *= Matrix.RotZMatrix(zCamAlpha);
             tmpMatrix *= Matrix.RotXMatrix(xCamAlpha);
-            tmpMatrix *= Matrix.ScaleMatrix((float)trackSizeBar.Value);
+            tmpMatrix *= Matrix.ScaleMatrix((float)numericUpDown1.Value);
             //Матрица масштабирования.
             tmpMatrix *= Matrix.ProjectionMatrix();
             //Сдвигаем в центр
@@ -186,13 +180,7 @@ namespace DrawingVector
             return new PointF(resMatrix[0, 0], resMatrix[0, 1]);
         }
 
-        private void XBar_Scroll(object sender, EventArgs e)
-        {
-            zCamAlpha = (float)XBar.Value / 10;
-            UpdateCameraMatrix();
-            UpdateObjectMatrix();
-            ReDraw();
-        }
+        
 
         private void ScaleBox_ValueChanged(object sender, EventArgs e)
         {
@@ -205,14 +193,7 @@ namespace DrawingVector
         {
             ReDraw();
         }
-
-        private void YBar_Scroll(object sender, EventArgs e)
-        {
-            xCamAlpha = (float)YBar.Value / 10;
-            UpdateCameraMatrix();
-            UpdateObjectMatrix();
-            ReDraw();
-        }
+        
 
         private void TxBar_ValueChanged(object sender, EventArgs e)
         {
@@ -236,8 +217,8 @@ namespace DrawingVector
         {
             vectors = new SparseVector[2];
 
-            vectors[0] = new SparseVector(new float[] { (float)numericUpDown1.Value, (float)numericUpDown2.Value, (float)numericUpDown3.Value });
-            vectors[1] = new SparseVector(new float[] { (float)numericUpDown4.Value, (float)numericUpDown5.Value, (float)numericUpDown6.Value });
+            vectors[0] = new SparseVector(new float[] { (float)Convert.ToInt32(textBox2.Text), (float)Convert.ToInt32(textBox3.Text), (float)Convert.ToInt32(textBox4.Text) });
+            vectors[1] = new SparseVector(new float[] { (float)Convert.ToInt32(textBox5.Text), (float)Convert.ToInt32(textBox6.Text), (float)Convert.ToInt32(textBox7.Text) });
 
             intersaction = new bool[2, 2];
             intersaction[0, 0] = true;
@@ -251,6 +232,55 @@ namespace DrawingVector
             UpdateCameraMatrix();
             UpdateObjectMatrix();
             ReDraw();
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            zCamAlpha = (float)numericUpDown2.Value / 10;
+            UpdateCameraMatrix();
+            UpdateObjectMatrix();
+            ReDraw();
+        }
+
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+            xCamAlpha = (float)numericUpDown3.Value / 10;
+            UpdateCameraMatrix();
+            UpdateObjectMatrix();
+            ReDraw();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            form1.Show();
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.Show();
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form3 form3 = new Form3();
+            form3.Show();
+            this.Close();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCameraMatrix();
+            UpdateObjectMatrix();
+            ReDraw();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            
         }
 
     }

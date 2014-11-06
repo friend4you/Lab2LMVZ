@@ -41,13 +41,7 @@ namespace DrawingVector
             graph = DrawPanel.CreateGraphics();
             UpdateCameraMatrix();
             UpdateObjectMatrix();
-
-            numericUpDown1.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown2.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown3.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown4.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown5.Maximum = Convert.ToInt32(textBox1.Text);
-            numericUpDown6.Maximum = Convert.ToInt32(textBox1.Text);
+            
 
             Timer timer = new Timer();
             timer.Interval = 100;
@@ -67,14 +61,14 @@ namespace DrawingVector
             PointF yrow = GetCameraPoint(new SparseVector(new float[] { 0, bgsize, 0 }));
             PointF zrow = GetCameraPoint(new SparseVector(new float[] { 0, 0, bgsize }));
             PointF zero = GetCameraPoint(new SparseVector(new float[] { 0, 0, 0 }));
-            PointF proectionX1 = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown1.Value, (float)numericUpDown2.Value, 0 }));
-            PointF proectionY1 = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown1.Value, 0, (float)numericUpDown3.Value }));
-            PointF proectionZ1 = GetCameraPoint(new SparseVector(new float[] { 0, (float)numericUpDown2.Value, (float)numericUpDown3.Value }));
-            PointF proectionX2 = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown4.Value, (float)numericUpDown5.Value, 0 }));
-            PointF proectionY2 = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown4.Value, 0, (float)numericUpDown6.Value }));
-            PointF proectionZ2 = GetCameraPoint(new SparseVector(new float[] { 0, (float)numericUpDown6.Value, (float)numericUpDown6.Value }));
-            PointF proectionX = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown1.Value, (float)numericUpDown2.Value, (float)numericUpDown3.Value }));
-            PointF proectionY = GetCameraPoint(new SparseVector(new float[] { (float)numericUpDown4.Value, (float)numericUpDown5.Value, (float)numericUpDown6.Value }));
+            //PointF proectionX1 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox1.Text), (float)Convert.ToInt32(comboBox2.Text), 0 }));
+            //PointF proectionY1 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox1.Text), 0, (float)Convert.ToInt32(comboBox3.Text) }));
+            //PointF proectionZ1 = GetCameraPoint(new SparseVector(new float[] { 0, (float)Convert.ToInt32(comboBox2.Text), (float)Convert.ToInt32(comboBox3.Text) }));
+            //PointF proectionX2 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox4.Text), (float)Convert.ToInt32(comboBox5.Text), 0 }));
+            //PointF proectionY2 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox4.Text), 0, (float)Convert.ToInt32(comboBox6.Text) }));
+            //PointF proectionZ2 = GetCameraPoint(new SparseVector(new float[] { 0, (float)Convert.ToInt32(comboBox5.Text), (float)Convert.ToInt32(comboBox6.Text) }));
+            //PointF proectionX = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox1.Text), (float)Convert.ToInt32(comboBox2.Text), (float)Convert.ToInt32(comboBox3.Text) }));
+            //PointF proectionY = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox4.Text), (float)Convert.ToInt32(comboBox5.Text), (float)Convert.ToInt32(comboBox6.Text) }));
 
             PointF point0 = GetCameraPoint(new SparseVector(new float[] { 0, 0, 0 }));
             PointF point1 = GetCameraPoint(new SparseVector(new float[] { bgsize, 0, 0 }));
@@ -111,7 +105,7 @@ namespace DrawingVector
                 {
                     if (intersaction[i, j])
                     {
-                        gr.DrawLine(Pens.WhiteSmoke, points[i], points[j]);
+                        gr.DrawLine(Pens.Black, points[i], points[j]);
                     }
                 }
             }
@@ -119,12 +113,12 @@ namespace DrawingVector
             gr.DrawLine(Pens.Red, zero, xrow);
             gr.DrawLine(Pens.Green, zero, yrow);
             gr.DrawLine(Pens.Blue, zero, zrow);
-            gr.DrawLine(Pens.Red, proectionX, proectionX1);
-            gr.DrawLine(Pens.Red, proectionX, proectionY1);
-            gr.DrawLine(Pens.Red, proectionX, proectionZ1);
-            gr.DrawLine(Pens.Red, proectionY, proectionX2);
-            gr.DrawLine(Pens.Red, proectionY, proectionY2);
-            gr.DrawLine(Pens.Red, proectionY, proectionZ2);
+            //gr.DrawLine(Pens.Red, proectionX, proectionX1);
+            //gr.DrawLine(Pens.Red, proectionX, proectionY1);
+            //gr.DrawLine(Pens.Red, proectionX, proectionZ1);
+            //gr.DrawLine(Pens.Red, proectionY, proectionX2);
+            //gr.DrawLine(Pens.Red, proectionY, proectionY2);
+            //gr.DrawLine(Pens.Red, proectionY, proectionZ2);
 
 
             graph.DrawImage(bm, 0, 0);
@@ -236,8 +230,8 @@ namespace DrawingVector
         {
             vectors = new SparseVector[2];
 
-            vectors[0] = new SparseVector(new float[] { (float)numericUpDown1.Value, (float)numericUpDown2.Value, (float)numericUpDown3.Value });
-            vectors[1] = new SparseVector(new float[] { (float)numericUpDown4.Value, (float)numericUpDown5.Value, (float)numericUpDown6.Value });
+            //vectors[0] = new SparseVector(new float[] { (float)Convert.ToInt32(comboBox1.Text), (float)Convert.ToInt32(comboBox2.Text), (float)Convert.ToInt32(comboBox3.Text) });
+            //vectors[1] = new SparseVector(new float[] { (float)Convert.ToInt32(comboBox4.Text), (float)Convert.ToInt32(comboBox5.Text), (float)Convert.ToInt32(comboBox6.Text) });
 
             intersaction = new bool[2, 2];
             intersaction[0, 0] = true;
@@ -247,6 +241,34 @@ namespace DrawingVector
         }
 
         private void trackSizeBar_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateCameraMatrix();
+            UpdateObjectMatrix();
+            ReDraw();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            form1.Show();
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form3 form3 = new Form3();
+            form3.Show();
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form4 form4 = new Form4();
+            form4.Show();
+            this.Close();
+        }
+
+        private void trackSizeBar_ValueChanged_1(object sender, EventArgs e)
         {
             UpdateCameraMatrix();
             UpdateObjectMatrix();
