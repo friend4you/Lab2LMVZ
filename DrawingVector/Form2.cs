@@ -21,7 +21,9 @@ namespace DrawingVector
         float xObjAlpha;
         float yObjAlpha;
         float zObjAlpha;
-        Graphics graph;        
+        Graphics graph;
+        Graphics g1, g2, g3, g4;
+        float x1 = 0, x2 = 0, y1 = 0, y2 = 0, z1 = 0, z2 = 0;
         Matrix cameraMatrix, objectMatrix;
 
         public Form2()
@@ -41,7 +43,7 @@ namespace DrawingVector
             graph = DrawPanel.CreateGraphics();
             UpdateCameraMatrix();
             UpdateObjectMatrix();
-            
+
 
             Timer timer = new Timer();
             timer.Interval = 100;
@@ -61,14 +63,14 @@ namespace DrawingVector
             PointF yrow = GetCameraPoint(new SparseVector(new float[] { 0, bgsize, 0 }));
             PointF zrow = GetCameraPoint(new SparseVector(new float[] { 0, 0, bgsize }));
             PointF zero = GetCameraPoint(new SparseVector(new float[] { 0, 0, 0 }));
-            //PointF proectionX1 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox1.Text), (float)Convert.ToInt32(comboBox2.Text), 0 }));
-            //PointF proectionY1 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox1.Text), 0, (float)Convert.ToInt32(comboBox3.Text) }));
-            //PointF proectionZ1 = GetCameraPoint(new SparseVector(new float[] { 0, (float)Convert.ToInt32(comboBox2.Text), (float)Convert.ToInt32(comboBox3.Text) }));
-            //PointF proectionX2 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox4.Text), (float)Convert.ToInt32(comboBox5.Text), 0 }));
-            //PointF proectionY2 = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox4.Text), 0, (float)Convert.ToInt32(comboBox6.Text) }));
-            //PointF proectionZ2 = GetCameraPoint(new SparseVector(new float[] { 0, (float)Convert.ToInt32(comboBox5.Text), (float)Convert.ToInt32(comboBox6.Text) }));
-            //PointF proectionX = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox1.Text), (float)Convert.ToInt32(comboBox2.Text), (float)Convert.ToInt32(comboBox3.Text) }));
-            //PointF proectionY = GetCameraPoint(new SparseVector(new float[] { (float)Convert.ToInt32(comboBox4.Text), (float)Convert.ToInt32(comboBox5.Text), (float)Convert.ToInt32(comboBox6.Text) }));
+            PointF proectionX1 = GetCameraPoint(new SparseVector(new float[] { x1, y1, 0 }));
+            PointF proectionY1 = GetCameraPoint(new SparseVector(new float[] { x1, 0, z1 }));
+            PointF proectionZ1 = GetCameraPoint(new SparseVector(new float[] { 0, y1, z1 }));
+            PointF proectionX2 = GetCameraPoint(new SparseVector(new float[] { x2, y2, 0 }));
+            PointF proectionY2 = GetCameraPoint(new SparseVector(new float[] { x2, 0, z2 }));
+            PointF proectionZ2 = GetCameraPoint(new SparseVector(new float[] { 0, y2, z2 }));
+            PointF proectionX = GetCameraPoint(new SparseVector(new float[] { x1, y1, z1 }));
+            PointF proectionY = GetCameraPoint(new SparseVector(new float[] { x2, y2, z2 }));
 
             PointF point0 = GetCameraPoint(new SparseVector(new float[] { 0, 0, 0 }));
             PointF point1 = GetCameraPoint(new SparseVector(new float[] { bgsize, 0, 0 }));
@@ -85,7 +87,7 @@ namespace DrawingVector
             Bitmap bm = new Bitmap(DrawPanel.Width, DrawPanel.Height);
             Graphics gr = Graphics.FromImage(bm);
 
-                
+
 
             gr.Clear(Color.White);
 
@@ -113,12 +115,12 @@ namespace DrawingVector
             gr.DrawLine(Pens.Red, zero, xrow);
             gr.DrawLine(Pens.Green, zero, yrow);
             gr.DrawLine(Pens.Blue, zero, zrow);
-            //gr.DrawLine(Pens.Red, proectionX, proectionX1);
-            //gr.DrawLine(Pens.Red, proectionX, proectionY1);
-            //gr.DrawLine(Pens.Red, proectionX, proectionZ1);
-            //gr.DrawLine(Pens.Red, proectionY, proectionX2);
-            //gr.DrawLine(Pens.Red, proectionY, proectionY2);
-            //gr.DrawLine(Pens.Red, proectionY, proectionZ2);
+            gr.DrawLine(Pens.Red, proectionX, proectionX1);
+            gr.DrawLine(Pens.Red, proectionX, proectionY1);
+            gr.DrawLine(Pens.Red, proectionX, proectionZ1);
+            gr.DrawLine(Pens.Red, proectionY, proectionX2);
+            gr.DrawLine(Pens.Red, proectionY, proectionY2);
+            gr.DrawLine(Pens.Red, proectionY, proectionZ2);
 
 
             graph.DrawImage(bm, 0, 0);
@@ -230,8 +232,8 @@ namespace DrawingVector
         {
             vectors = new SparseVector[2];
 
-            //vectors[0] = new SparseVector(new float[] { (float)Convert.ToInt32(comboBox1.Text), (float)Convert.ToInt32(comboBox2.Text), (float)Convert.ToInt32(comboBox3.Text) });
-            //vectors[1] = new SparseVector(new float[] { (float)Convert.ToInt32(comboBox4.Text), (float)Convert.ToInt32(comboBox5.Text), (float)Convert.ToInt32(comboBox6.Text) });
+            vectors[0] = new SparseVector(new float[] { x1, y1, z1 });
+            vectors[1] = new SparseVector(new float[] { x2, y2, z2 });
 
             intersaction = new bool[2, 2];
             intersaction[0, 0] = true;
@@ -273,6 +275,72 @@ namespace DrawingVector
             UpdateCameraMatrix();
             UpdateObjectMatrix();
             ReDraw();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g1 = panel1.CreateGraphics();
+            g1.DrawLine(new Pen(Color.Red), z1, y1, z1, y1);
+        }
+
+        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            Graphics g1 = panel1.CreateGraphics();
+            z1 = 120 - e.Y;
+            y1 = e.X;
+            g1.DrawLine(new Pen(Color.Red), z1, y1, z1, y1);
+        }
+
+       
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel2_MouseClick(object sender, MouseEventArgs e)
+        {
+            x1 = e.X;
+        }
+
+        private void panel3_MouseClick(object sender, MouseEventArgs e)
+        {
+            z2 = 120 - e.Y;
+            y2 = e.X;
+        }
+
+        private void panel4_MouseClick(object sender, MouseEventArgs e)
+        {
+            x2 = e.X;
+        }
+
+        private void XBar_ValueChanged(object sender, EventArgs e)
+        {
+            zCamAlpha = (float)XBar.Value / 10;
+            UpdateCameraMatrix();
+            UpdateObjectMatrix();
+            ReDraw();
+        }
+
+        private void YBar_ValueChanged(object sender, EventArgs e)
+        {
+            xCamAlpha = (float)YBar.Value / 10;
+            UpdateCameraMatrix();
+            UpdateObjectMatrix();
+            ReDraw();
+        }
+        public void Draw(Panel panel, float x, float y)
+        {
+            Bitmap bmp = new Bitmap(panel2.Width, panel2.Height);
+            Graphics gr = Graphics.FromImage(bmp);
+                  
+
+
+            graph.DrawImage(bmp, 0, 0);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            
         }
 
     }
